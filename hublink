@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WORKDIR=$(dirname $(realpath $BASH_SOURCE[0]))
+WORKDIR=$(dirname $(readlink -f $0))
 cd $WORKDIR
 
 APPLY_OUTPUT=$(terraform apply -auto-approve -json)
