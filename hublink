@@ -1,0 +1,14 @@
+#!/bin/bash
+
+WORKDIR=$(dirname(realpath $BASH_SOURCE[0]))
+cd $WORKDIR
+
+APPLY_OUTPUT=$(terraform apply -auto-approve -json)
+INSTANCE_ID=$(echo "${APPLY_OUTPUT##*$'\n'}" | jq -r .outputs.instance_id.value)
+
+aws ec2 wait instance-status-ok --instance-ids $INSTANCE_ID
+
+INSTANCE_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID | jq -r .Reservations[0].Instances[0].NetworkInterfaces[0].Association.PublicIp)
+sudo ssh -i ~/.ssh/id_ed25519 -C -p 7153 -o "StrictHostKeyChecking no" -D 666 ec2-user@$INSTANCE_IP
+
+aws ec2 terminate-instances --instance-ids $INSTANCE_ID | jq .
