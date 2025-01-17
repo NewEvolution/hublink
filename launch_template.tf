@@ -26,9 +26,9 @@ resource "aws_launch_template" "hublink_ec2_lt" {
   instance_type                        = "t4g.micro"
   key_name                             = "Abomination"
   instance_initiated_shutdown_behavior = "terminate"
-  subnet_id                            = aws_subnet.public_subnet_B.id
 
   network_interfaces {
+    subnet_id                   = aws_subnet.public_subnet_B.id
     associate_public_ip_address = true
     security_groups             = [aws_security_group.hublink_ec2_sg.id]
   }
