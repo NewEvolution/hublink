@@ -1,41 +1,31 @@
-data "aws_ami" "amazon_linux" {
+data "aws_ami" "al2023" {
   most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["al2023-ami-ecs-hvm-*"]
-  }
+  owners      = ["amazon"]
 
   filter {
     name   = "architecture"
-    values = ["x86_64"]
+    values = ["arm64"]
   }
 
   filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
+    name   = "name"
+    values = ["al2023-ami-2023*"]
   }
-
-  owners = ["amazon", "self"]
 }
 
 data "aws_default_tags" "default_tags" {}
 
 locals {
-  asg_resources_to_tag = ["instance", "volume", "network-interface"]
+  resources_to_tag = ["instance", "volume", "network-interface"]
 }
 
 resource "aws_launch_template" "hublink_ec2_lt" {
   name_prefix                          = "hublink-lt-"
   ebs_optimized                        = true
-  image_id                             = data.aws_ami.amazon_linux.id
+  image_id                             = data.aws_ami.al2023.id
   instance_type                        = "t4g.micro"
   key_name                             = "Abomination"
-  instance_initiated_shutdown_behavior = "stop"
-
-  iam_instance_profile {
-    name = aws_iam_instance_profile.hublink_ecs_service_role.name
-  }
+  instance_initiated_shutdown_behavior = "terminate"
 
   network_interfaces {
     associate_public_ip_address = true
@@ -44,7 +34,7 @@ resource "aws_launch_template" "hublink_ec2_lt" {
 
   dynamic "tag_specifications" {
     for_each = {
-      for type in local.asg_resources_to_tag : type => data.aws_default_tags.default_tags
+      for type in local.resources_to_tag : type => data.aws_default_tags.default_tags
     }
     content {
       resource_type = tag_specifications.key
