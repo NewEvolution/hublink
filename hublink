@@ -3,10 +3,12 @@
 WORKDIR=$(dirname $(readlink -f $0))
 cd $WORKDIR
 
-APPLY_OUTPUT=$(terraform apply -auto-approve -json)
+APPLY_OUTPUT=$(terraform apply -auto-approve -json | tee /dev/tty)
 INSTANCE_ID=$(echo "${APPLY_OUTPUT##*$'\n'}" | jq -r .outputs.instance_id.value)
 
+printf "Awaiting instance start..."
 aws ec2 wait instance-status-ok --instance-ids $INSTANCE_ID
+echo "done"
 
 INSTANCE_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID | jq -r .Reservations[0].Instances[0].NetworkInterfaces[0].Association.PublicIp)
 sudo ssh -i ~/.ssh/id_ed25519 -C -p 7153 -o "StrictHostKeyChecking no" -D 666 ec2-user@$INSTANCE_IP
