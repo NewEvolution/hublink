@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "us-west-2"
   default_tags {
     tags = {
      Project = "hublink"
@@ -12,6 +12,6 @@ terraform {
   backend "s3" {
     bucket = "hublink-state-tf"
     key    = "hublink.tfstate"
-    region = "us-east-1"
+    region = "us-west-2"
   }
 }
