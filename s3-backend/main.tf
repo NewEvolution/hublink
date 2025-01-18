@@ -3,7 +3,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-west-2"
+  region = var.region
   default_tags {
     tags = {
       Project = "hublink"
@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "state" {
-  bucket = "hublink-state-tf"
+  bucket = var.state_bucket
 
   tags = {
     Terraform = true

@@ -10,25 +10,25 @@ resource "aws_internet_gateway" "igw" {
 // Subnets
 resource "aws_subnet" "public_subnet_A" {
   vpc_id            = aws_vpc.hublink_vpc.id
-  availability_zone = "us-west-2a"
+  availability_zone = "${var.region}a"
   cidr_block        = "10.0.0.0/24"
 }
 
 resource "aws_subnet" "public_subnet_B" {
   vpc_id            = aws_vpc.hublink_vpc.id
-  availability_zone = "us-west-2b"
+  availability_zone = "${var.region}b"
   cidr_block        = "10.0.1.0/24"
 }
 
 resource "aws_subnet" "private_subnet_A" {
   vpc_id            = aws_vpc.hublink_vpc.id
-  availability_zone = "us-west-2a"
+  availability_zone = "${var.region}a"
   cidr_block        = "10.0.10.0/24"
 }
 
 resource "aws_subnet" "private_subnet_B" {
   vpc_id            = aws_vpc.hublink_vpc.id
-  availability_zone = "us-west-2b"
+  availability_zone = "${var.region}b"
   cidr_block        = "10.0.11.0/24"
 }
 
@@ -67,7 +67,7 @@ resource "aws_route_table_association" "private_route_B" {
 
 resource "aws_vpc_endpoint" "s3" {
   vpc_id            = aws_vpc.hublink_vpc.id
-  service_name      = "com.amazonaws.us-west-2.s3"
+  service_name      = "com.amazonaws.${var.region}.s3"
   vpc_endpoint_type = "Gateway"
 
   route_table_ids = [

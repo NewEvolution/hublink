@@ -24,7 +24,7 @@ resource "aws_launch_template" "hublink_ec2_lt" {
   ebs_optimized                        = true
   image_id                             = data.aws_ami.al2023.id
   instance_type                        = "t4g.micro"
-  key_name                             = "Abomination"
+  key_name                             = var.ssh_key_name
   instance_initiated_shutdown_behavior = "terminate"
   user_data                            = filebase64("${path.module}/userdata.sh")
 
