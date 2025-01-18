@@ -1,4 +1,16 @@
 #!/bin/bash
+source .env
+
+if [[ -z $(which aws) ]]; then
+  echo "The AWS CLI must be installed on your system: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html"
+  exit 1
+else if [[ -z $(which jq) ]]; then
+  echo "jq must be installed on your system: https://jqlang.github.io/jq/download/"
+  exit 1
+else if [[ -z $(which terraform) ]]; then
+  echo "terraform must be inastalled on your system: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli"
+  exit 1
+fi
 
 WORKDIR=$(dirname $(readlink -f $0))
 cd $WORKDIR
