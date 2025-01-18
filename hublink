@@ -1,5 +1,4 @@
 #!/bin/bash
-source .env
 
 if [[ -z $(which aws) ]]; then
   echo "The AWS CLI must be installed on your system: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html"
@@ -14,6 +13,7 @@ fi
 
 WORKDIR=$(dirname $(readlink -f $0))
 cd $WORKDIR
+source .env
 rm -rf last_apply.json
 
 terraform apply -auto-approve -json | tee last_apply.json | jq .@message
