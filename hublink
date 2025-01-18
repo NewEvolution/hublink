@@ -29,6 +29,6 @@ INSTANCE_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID | jq -r .Re
 echo "SOCKS proxy active"
 sudo ssh -i ~/.ssh/$TF_VAR_ssh_key_name -q -C -N -p 7153 -o "StrictHostKeyChecking no" -D 666 ec2-user@$INSTANCE_IP
 
-echo "Terminating instance"
+echo -e "\nTerminating instance"
 aws ec2 terminate-instances --instance-ids $INSTANCE_ID | jq .
 echo "Done."
