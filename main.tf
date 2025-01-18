@@ -10,8 +10,8 @@ provider "aws" {
 terraform {
   required_version = "> 0.15.0"
   backend "s3" {
-    bucket = CHANGEME
+    bucket = "CHANGEME"
     key    = "hublink.tfstate"
-    region = CHANGEME
+    region = "CHANGEME"
   }
 }
