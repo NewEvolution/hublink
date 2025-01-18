@@ -23,5 +23,5 @@ Prerequisites:
 
 ### Usage
 1. Run `hublink` to connect to the SOCKS proxy.
-1. Connect to the SOCKS proxy ([windows](), [Linux]()) at _localhost_ port 666.
+1. Connect to the SOCKS proxy at _localhost_ port 666. [Windows instructions.](https://superuser.com/a/1767865)
 1. When done browsing turn off proxy in Windows/Linux and `ctrl+c` to disconnect and terminate the proxy instance.
