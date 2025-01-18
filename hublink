@@ -16,7 +16,7 @@ cd $WORKDIR
 source .env
 rm -rf last_apply.json
 
-terraform apply -auto-approve -json | tee last_apply.json | jq .["@message"]
+terraform apply -auto-approve -json | tee last_apply.json | jq '."@message"'
 APPLY_OUTPUT=$(cat last_apply.json)
 INSTANCE_ID=$(echo "${APPLY_OUTPUT##*$'\n'}" | jq -r .outputs.instance_id.value)
 
