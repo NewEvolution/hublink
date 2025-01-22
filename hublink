@@ -24,7 +24,7 @@ printf "Awaiting instance start"
 i=0
 while [ $i -lt $WAIT_SECONDS ]; do
   printf "."
-  i++
+  i=$(( $i + 1  ))
 done
 echo "done"
 
