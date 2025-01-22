@@ -12,7 +12,7 @@ Prerequisites:
 
 1. [Clone the repository.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 1. Create an SSH key with `ssh-keygen -t ed25519 -C Hublink` and note its name.
-1. Run `cp .env.example .env` and edit the _.env_ file to set the required variables.
+1. Run `cp env.example .env` and edit the _.env_ file to set the required variables.
   * `TF_VAR_ssh_key_name` should be the key name noted above.
   * `TF_VAR_ssh_public_key` is the contents of yoru key _.pub_ file.
 1. Edit _main.tf_ and replace the `CHANGME`s with the [region](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) you want the proxy in and a unique bucket name.
