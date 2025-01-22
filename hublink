@@ -20,8 +20,12 @@ terraform apply -auto-approve -json | tee last_apply.json | jq '."@message"'
 APPLY_OUTPUT=$(cat last_apply.json)
 INSTANCE_ID=$(echo "${APPLY_OUTPUT##*$'\n'}" | jq -r .outputs.instance_id.value)
 
-printf "Awaiting instance start..."
-aws ec2 wait instance-status-ok --instance-ids $INSTANCE_ID
+printf "Awaiting instance start"
+i=0
+while [ $i -lt $WAIT_SECONDS ]; do
+  printf "."
+  i++
+done
 echo "done"
 
 echo "Getting instance IP..."
