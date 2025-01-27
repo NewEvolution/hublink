@@ -1,3 +1,8 @@
+variable "max_spot_price" {
+  description = "Maximum spot instance price to accept"
+  type        = number
+}
+
 variable "ssh_key_name" {
   description = "Name for the SSH key for connecting to the instance in AWS"
   type        = string
