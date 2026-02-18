@@ -8,7 +8,7 @@ resource "aws_security_group" "hublink_ec2_sg" {
     from_port   = 7153
     to_port     = 7153
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.external_ip}/0"]
   }
 
   egress {

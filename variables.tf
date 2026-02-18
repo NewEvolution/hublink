@@ -13,6 +13,11 @@ variable "ssh_public_key" {
   type        = string
 }
 
+variable "external_ip" {
+  description = "Your public IP for allowing SSH connections"
+  type        = string
+}
+
 variable "region" {
   description = "AWS region for infrastructure"
   type        = string
